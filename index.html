@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DayFrame</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0f27">
+<link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="DayFrame"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#e9ecfa;--bg2:#d4d0f1;--bg3:#f7c6bb;--gl:rgba(255,255,255,.58);--gl2:rgba(255,255,255,.85);--ln:rgba(40,40,90,.14);--tx:#1b1e3a;--mu:#5a5f82;--ac:#0e9877;--am:#c47410;--rs:#d6455f;--mt:#c3bdee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#0a0f27;--bg2:#2b2452;--bg3:#b9546f;--gl:rgba(255,255,255,.07);--gl2:rgba(255,255,255,.13);--ln:rgba(255,255,255,.14);--tx:#eef0fb;--mu:#a7acc9;--ac:#7be0c3;--am:#f6b66a;--rs:#ff8fa3;--mt:#141a3d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg1:#0a0f27;--bg2:#2b2452;--bg3:#b9546f;--gl:rgba(255,255,255,.07);--gl2:rgba(255,255,255,.13);--ln:rgba(255,255,255,.14);--tx:#eef0fb;--mu:#a7acc9;--ac:#7be0c3;--am:#f6b66a;--rs:#ff8fa3;--mt:#141a3d;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{font:15px/1.5 'Instrument Sans',system-ui,sans-serif;color:var(--tx);min-height:100vh;background:radial-gradient(130% 70% at 75% 108%,var(--bg3),transparent 58%),linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.i{width:19px;height:19px;flex:none}
+.gl{background:var(--gl);border:1px solid var(--ln);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border-radius:22px}
+.app{display:grid;grid-template-columns:210px minmax(0,1fr);gap:16px;padding:16px;max-width:1380px;margin:auto}
+.side{position:sticky;top:16px;height:calc(100vh - 32px);padding:18px 12px;display:flex;flex-direction:column;gap:4px}
+.logo{display:flex;gap:10px;align-items:center;padding:0 8px 16px;font-family:Fraunces,serif;font-size:20px;font-weight:600}
+.logo b{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,var(--ac),var(--am))}
+.nv{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:14px;color:var(--mu);text-align:left;width:100%}
+.nv.on{background:var(--gl2);color:var(--tx)}
+.nv:hover{color:var(--tx)}
+.foot{margin-top:auto;font-size:12px;color:var(--mu);padding:8px}
+.foot button{color:var(--ac);font-size:12px;margin-right:8px}
+h1{font:600 28px/1.15 Fraunces,serif}h2{font:600 19px Fraunces,serif}h3{font-size:16px;font-weight:600}
+.mu{color:var(--mu)}.sm{font-size:13px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:16px}
+.stack{display:flex;flex-direction:column;gap:16px;min-width:0}
+.hero{position:relative;overflow:hidden;padding:26px;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end}
+.hero::before{content:"";position:absolute;inset:auto 0 0 0;height:62%;background:linear-gradient(180deg,rgba(40,30,80,.1),var(--mt));clip-path:polygon(0 100%,0 62%,14% 38%,24% 52%,38% 10%,50% 46%,62% 24%,76% 56%,88% 34%,100% 58%,100% 100%);opacity:.75}
+.hero>*{position:relative}
+.hero h1{max-width:560px;margin:6px 0}
+.bar{height:7px;border-radius:9px;background:var(--ln);overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--ac),var(--am));transition:width .4s}
+.tag{font-size:12px;padding:2px 9px;border-radius:99px;border:1px solid var(--ln);white-space:nowrap}
+.tag.e{color:var(--rs);border-color:currentColor}.tag.o{color:var(--mu)}
+.btn{padding:8px 15px;border-radius:12px;border:1px solid var(--ln);background:var(--gl)}.btn:hover{background:var(--gl2)}
+.btn.pri{background:linear-gradient(135deg,var(--ac),var(--am));color:#10132b;border:0;font-weight:600}
+.pad{padding:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer;text-align:left;width:100%}
+.ck .b{width:19px;height:19px;border-radius:7px;border:1.8px solid var(--mu);flex:none;margin-top:2px;display:grid;place-items:center;font-size:12px;color:#10132b}
+.ck.d .b{background:var(--ac);border-color:var(--ac)}.ck.d span{text-decoration:line-through;color:var(--mu)}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;font-size:13px}
+.cal span{padding:5px 0;border-radius:50%;position:relative}.cal .t{background:var(--ac);color:#10132b;font-weight:600}.cal .h::after{content:"";position:absolute;bottom:1px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--am)}
+.st{display:grid;grid-template-columns:1fr 1fr;gap:10px}.st div{padding:12px;border-radius:16px;background:var(--gl);border:1px solid var(--ln)}.st b{font:600 22px Fraunces,serif;display:block}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(130px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px}
+.day{padding:12px;min-height:240px;display:flex;flex-direction:column;gap:8px}.day.now{outline:1.5px solid var(--ac)}
+.chip{padding:8px 10px;border-radius:12px;background:var(--gl2);border-left:4px solid var(--c);font-size:13px;text-align:left;width:100%}.chip.d{opacity:.5;text-decoration:line-through}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mu);margin-bottom:10px}
+input,select,textarea{background:var(--gl);border:1px solid var(--ln);border-radius:12px;padding:9px 11px;color:var(--tx);width:100%}
+select option{color:#111}
+.ov{position:fixed;inset:0;background:rgba(5,8,25,.55);display:grid;place-items:center;padding:16px;z-index:9;overflow:auto}
+.box{width:min(440px,100%);padding:22px;background:var(--bg2)}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:10px 18px;border-radius:14px;background:var(--bg2);border:1px solid var(--ln);z-index:10;max-width:90%}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}.btn.on{background:var(--gl2);border-color:var(--ac)}.pick{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.dots{display:flex;gap:6px;margin-bottom:16px}.dots i{height:4px;flex:1;border-radius:4px;background:var(--ln)}.dots i.on{background:var(--ac)}
+@media (max-width:900px){.app{grid-template-columns:1fr;padding:12px 12px 90px}.cols{grid-template-columns:1fr}
+.side{position:fixed;inset:auto 8px calc(8px + env(safe-area-inset-bottom,0px)) 8px;top:auto;height:auto;flex-direction:row;padding:6px;z-index:8;border-radius:20px}.side .logo,.side .foot{display:none}.nv{flex-direction:column;gap:2px;font-size:11px;padding:6px 2px;align-items:center;text-align:center}.wk{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));overflow:visible;padding-bottom:0}.day{min-height:0}.day.now{order:-1}.top>.row{width:100%}.top>.row .btn.pri{margin-left:auto}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#ib{display:none;position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:7;padding:8px 10px 8px 16px;gap:12px;align-items:center;font-size:14px;width:max-content;max-width:94%}body.can #ib{display:flex}</style></head>
+<body><div class="app"><nav class="side gl" id="nav"></nav><main id="main"></main></div><div id="modal"></div><div id="toast"></div>
+<script>
+const K='dayframe.v1',$=s=>document.querySelector(s);
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const today=()=>iso(new Date()),D=s=>new Date(s+'T12:00');
+const addD=(s,n)=>{const d=D(s);d.setDate(d.getDate()+n);return iso(d)};
+const wk0=s=>addD(s,-((D(s).getDay()+6)%7)),dow=s=>(D(s).getDay()+6)%7;
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fm=m=>m>=60?Math.floor(m/60)+'h'+(m%60?' '+m%60+'m':''):m+'m';
+const DN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const IC={home:'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',goals:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',plan:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',tasks:'M5 12l4 4 10-10',prog:'M4 20V10M10 20V4M16 20v-7M22 20H2',jour:'M6 3h12v18H6zM9 8h6M9 12h6'};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${IC[n]}"/></svg>`;
+let S,view='home',ui={wo:0,tf:'today',open:{},m:null};
+function seed(){const t=today(),T=[],
+g=(id,n,c,ms)=>({id,n,c,made:t,start:ms.filter(x=>x[1]).length,next:'',block:'',ms:ms.map((x,i)=>({id:id+i,t:x[0],done:!!x[1],at:x[1]?t:null}))}),
+k=(t0,g0,m,min,ess,o)=>T.push({id:uid(),t:t0,g:g0,m:g0+m,min,ess,date:o==null?'':addD(t,o),done:false});
+const goals=[g('dev','Become a capable web developer','#4cc9f0',[['Understand HTML and CSS',1],['Learn JavaScript'],['Build complete projects'],['Publish a portfolio'],['Deliver real client work']]),
+g('inc','Earn income with FORM11 Tech Studios','#f6b66a',[['Build the studio site'],['Land the first client'],['Deliver the first paid project']]),
+g('jamb','Pass JAMB','#ff8fa3',[['Finish the syllabus'],['Practice past questions'],['Sit mock exams']]),
+g('gtr','Learn guitar for church','#b794f6',[['Core chords'],['Play three songs'],['Play at church']]),
+g('yt','Start a YouTube channel','#6ea8ff',[['Plan the channel'],['Publish the first video'],['Publish four videos']])];
+k('Finish the JavaScript functions lesson','dev',1,45,true,0);k('Build a small to-do project','dev',2,60,true,1);
+k('Update the studio site','inc',0,40,true,0);k('Send 5 outreach messages','inc',1,25,true,1);
+k('Study Mathematics','jamb',0,60,true,0);k('Solve 20 past questions','jamb',1,40,true,1);k('Review mistakes','jamb',1,20,false,0);
+k('Practice chord changes','gtr',0,30,false,0);k('Outline the first video','yt',0,30,false,2);k('Write the CSS Grid notes','dev',1,30,false);
+return{name:'Daniel',free:[180,180,180,180,180,240,90],goals,tasks:T,journal:[]}}
+function load(){try{S=JSON.parse(localStorage.getItem(K))}catch(e){}if(!S||!S.goals||!S.ob)S={name:'',free:[180,180,180,180,180,240,90],goals:[],tasks:[],journal:[],ob:0};if(!S.rot)S.rot=[[],[],[],[],[],[],[]]}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+const G=id=>S.goals.find(g=>g.id==id),M=(g,id)=>g&&g.ms.find(m=>m.id==id),tk=m=>S.tasks.filter(t=>t.m==m.id);
+const mp=m=>{if(m.done)return 1;const a=tk(m);return a.length?a.filter(t=>t.done).length/a.length:0};
+const gp=g=>g.ms.length?g.ms.reduce((s,m)=>s+mp(m),0)/g.ms.length:0,all=()=>S.goals.length?S.goals.reduce((s,g)=>s+gp(g),0)/S.goals.length:0;
+const pc=x=>Math.round(x*100),cap=d=>S.free[dow(d)],ld=d=>S.tasks.filter(t=>t.date==d&&!t.done).reduce((s,t)=>s+t.min,0);
+function toast(m){const e=$('#toast');e.innerHTML=`<div class="toast">${esc(m)}</div>`;clearTimeout(toast.t);toast.t=setTimeout(()=>e.innerHTML='',3200)}
+function tog(id){const t=S.tasks.find(x=>x.id==id);t.done=!t.done;t.at=t.done?today():null;const m=M(G(t.g),t.m);
+if(m){if(t.done&&tk(m).every(x=>x.done)&&!m.done){m.done=m.auto=true;m.at=today();toast('Milestone reached: '+m.t)}else if(!t.done&&m.auto){m.done=m.auto=false;m.at=null}}}
+const okd=(g,d)=>{const R=S.rot||[];return !R.some(r=>r.includes(g))||R[dow(d)].includes(g)};
+function place(t,from){let best='',bl=1e9;for(let i=0;i<7;i++){const d=addD(from,i);if(d<today())continue;const l=ld(d)+(okd(t.g,d)?0:1e5);if(ld(d)+t.min<=cap(d)&&l<bl){bl=l;best=d}}t.date=best;return best}
+function autoPlan(){const w=wk0(addD(today(),ui.wo*7)),days=[0,1,2,3,4,5,6].map(i=>addD(w,i)).filter(d=>d>=today());let n=0,left=0;
+S.tasks.filter(t=>!t.done&&(!t.date||t.date<today())).sort((a,b)=>b.ess-a.ess).forEach(t=>{let b='',bl=1e9;days.forEach(d=>{const l=ld(d);const same=S.tasks.filter(x=>x.date==d&&x.g==t.g&&!x.done).length;if(okd(t.g,d)&&l+t.min<=cap(d)&&same<2&&l<bl){bl=l;b=d}});if(b){t.date=b;n++}else left++});
+toast(n+' tasks placed across the week'+(left?', '+left+' kept in the backlog (no room left)':''))}
+function rescue(f){const td=today(),done=S.tasks.filter(t=>t.date==td&&t.done).reduce((s,t)=>s+t.min,0);let rem=Math.round(cap(td)*f)-done,keep=0,mv=0,sp=0;
+S.tasks.filter(t=>t.date==td&&!t.done).sort((a,b)=>b.ess-a.ess).forEach(t=>{if(keep+t.min<=rem){keep+=t.min;return}
+if(t.ess&&t.min>30){const h=Math.ceil(t.min/2/5)*5;if(keep+h<=rem){S.tasks.push({...t,id:uid(),t:t.t+' (part 2)',min:t.min-h,date:place({min:t.min-h,g:t.g},addD(td,1))});t.t+=' (part 1)';t.min=h;keep+=h;sp++;return}}
+place(t,addD(td,1));mv++});
+ui.rescued=`Today is now ${fm(keep)} of work. ${sp?sp+' split, ':''}${mv} moved to days with room. Missing a task is a scheduling event, not a failure.`}
+function home(){const td=today(),T=S.tasks.filter(t=>t.date==td),ess=T.filter(t=>t.ess),ed=ess.filter(t=>t.done).length,open=T.filter(t=>!t.done).sort((a,b)=>b.ess-a.ess),nx=open[0],h=new Date().getHours();
+const th=((S.rot||[])[dow(td)]||[]).filter(G),em=ess.filter(t=>!t.done).reduce((s,t)=>s+t.min,0),by={};T.forEach(t=>(by[t.g]=by[t.g]||[]).push(t));
+const lastT=S.tasks.filter(t=>t.done&&t.at).sort((a,b)=>b.at<a.at?-1:1)[0],rg=G((lastT||S.tasks[0]||{}).g||S.goals[0].id),ny=S.tasks.find(t=>t.g==rg.id&&!t.done);
+const hd=!ess.length?'Nothing essential planned for today':ed==ess.length?'Mission complete. Everything else is a bonus.':`Finish ${ess.length-ed} essential ${ess.length-ed>1?'tasks':'task'} and today counts`;
+return`<div class="top"><div><h2>Good ${h<12?'morning':h<18?'afternoon':'evening'}, ${esc(S.name)}</h2><span class="mu sm">${D(td).toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})}</span></div><button class="btn" data-a="rescue">My day went off-plan</button></div>
+<div class="cols"><div class="stack"><div class="hero gl"><span class="sm mu">Today's mission${th.length?' · '+th.map(i=>G(i).s||G(i).n).join(' + '):''}</span><h1>${hd}</h1>
+<p class="mu">${ess.length&&ed<ess.length?`About ${fm(em)} of focused work. A good day is: ${ess.filter(t=>!t.done).slice(0,3).map(t=>esc(t.t.toLowerCase())).join(', ')}.`:ess.length?'You met the realistic plan. Rest is part of the plan.':'Auto-plan the week and your mission will appear here.'}</p>
+<div class="row" style="margin-top:14px"><div class="bar" style="flex:1;min-width:120px"><i style="width:${ess.length?pc(ed/ess.length):0}%"></i></div><span class="sm">${ed}/${ess.length} essentials</span></div></div>
+${nx?`<div class="gl pad row sp"><div><span class="sm mu">Next up${nx.ess?'':' (optional)'}</span><h3>${esc(nx.t)} <span class="mu sm">${fm(nx.min)}</span></h3><span class="sm mu">Why: moves "${esc((M(G(nx.g),nx.m)||{t:G(nx.g).n}).t)}" forward in ${esc(G(nx.g).n)}</span></div><button class="btn pri" data-a="tog" data-i="${nx.id}">Mark done</button></div>`:''}
+<div class="row sp"><h2>Today's focus</h2><button class="btn" data-a="new" data-d="${td}">Add task</button></div>
+<div class="grid3">${Object.keys(by).map(id=>{const g=G(id);return`<div class="gl pad"><div class="row" style="margin-bottom:6px"><span class="dot" style="background:${g.c}"></span><h3>${esc(g.n)}</h3></div>${by[id].map(t=>`<div class="row sp"><button class="ck ${t.done?'d':''}" data-a="tog" data-i="${t.id}"><span class="b">${t.done?'✓':''}</span><span>${esc(t.t)} <i class="mu sm">${fm(t.min)}</i></span></button><span class="tag ${t.ess?'e':'o'}">${t.ess?'Essential':'Optional'}</span></div>`).join('')}</div>`}).join('')||'<div class="gl pad mu">No tasks today. Open the Planner and auto-plan your week.</div>'}</div></div>
+<div class="stack"><div class="gl pad">${cal()}</div><div class="st gl pad" style="display:grid"><div><b>${S.goals.length}</b><span class="sm mu">Goals</span></div><div><b>${S.tasks.filter(t=>!t.done).length}</b><span class="sm mu">Open tasks</span></div><div><b>${S.tasks.filter(t=>t.done&&t.at==td).length}</b><span class="sm mu">Done today</span></div><div><b>${pc(all())}%</b><span class="sm mu">Overall</span></div></div>
+<div class="gl pad"><span class="sm mu">Pick up where you left off</span><h3 style="margin:4px 0"><span class="dot" style="background:${rg.c};display:inline-block"></span> ${esc(rg.n)}</h3><p class="sm"><b>Last done:</b> ${lastT&&lastT.g==rg.id?esc(lastT.t):'nothing yet'}</p><p class="sm"><b>Next action:</b> ${esc(rg.next||(ny?ny.t:'Add a task'))}</p>${rg.block?`<p class="sm" style="color:var(--rs)"><b>Blocker:</b> ${esc(rg.block)}</p>`:''}</div></div></div>`}
+function cal(){const n=new Date(),y=n.getFullYear(),m=n.getMonth(),f=(new Date(y,m,1).getDay()+6)%7,dim=new Date(y,m+1,0).getDate();let c='';for(let i=0;i<f;i++)c+='<span></span>';
+for(let d=1;d<=dim;d++){const s=iso(new Date(y,m,d,12)),h=S.tasks.some(t=>t.date==s&&!t.done);c+=`<span class="${s==today()?'t':h?'h':''}">${d}</span>`}return`<h3 style="margin-bottom:8px">${n.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</h3><div class="cal mu">${DN.map(d=>`<span>${d[0]}</span>`).join('')}</div><div class="cal">${c}</div>`}
+function goals(){return`<div class="top"><div><h1>Goals</h1><span class="mu">Turn dreams into milestones, then into tasks small enough to finish.</span></div><button class="btn pri" data-a="newgoal">New goal</button></div><div class="stack">${S.goals.map(g=>{const o=ui.open[g.id],p=gp(g),dn=g.ms.filter(m=>m.done).length;return`<div class="gl pad"><button class="row sp" style="width:100%;text-align:left" data-a="open" data-i="${g.id}"><div class="row"><span class="dot" style="background:${g.c}"></span><h3>${esc(g.n)}</h3></div><span class="sm mu">${dn}/${g.ms.length} milestones · ${pc(p)}%</span></button><div class="bar" style="margin-top:10px"><i style="width:${pc(p)}%;background:${g.c}"></i></div>
+${o?`<div style="margin-top:14px">${g.ms.map(m=>{const a=tk(m);return`<div style="margin-bottom:8px"><div class="row sp"><button class="ck ${m.done?'d':''}" data-a="ms" data-i="${g.id}" data-j="${m.id}"><span class="b">${m.done?'✓':''}</span><span><b>${esc(m.t)}</b> <i class="sm mu">${a.filter(t=>t.done).length}/${a.length} tasks</i></span></button><button class="btn sm" data-a="new" data-g="${g.id}" data-m="${m.id}">+ task</button></div>${a.map(t=>`<button class="ck ${t.done?'d':''} sm" style="padding-left:30px" data-a="tog" data-i="${t.id}"><span class="b">${t.done?'✓':''}</span><span>${esc(t.t)} · ${fm(t.min)}</span></button>`).join('')}</div>`}).join('')}
+<div class="row" style="margin:8px 0"><input id="nm${g.id}" placeholder="Add a milestone"><button class="btn" data-a="addms" data-i="${g.id}">Add</button></div>
+<div class="r2"><label>Next action<input data-c="next" data-i="${g.id}" value="${esc(g.next)}" placeholder="What to do first when you return"></label><label>Blocker<input data-c="block" data-i="${g.id}" value="${esc(g.block)}" placeholder="Anything stopping you"></label></div></div>`:''}</div>`}).join('')}</div>`}
+function planner(){const w=wk0(addD(today(),ui.wo*7)),days=[0,1,2,3,4,5,6].map(i=>addD(w,i)),back=S.tasks.filter(t=>!t.done&&!t.date);
+return`<div class="top"><div><h1>Weekly planner</h1><span class="mu">Plan the week first. Each day only carries what fits.</span></div><div class="row"><button class="btn" data-a="wk" data-i="-1">‹</button><span class="sm">${D(w).toLocaleDateString(undefined,{day:'numeric',month:'short'})} – ${D(addD(w,6)).toLocaleDateString(undefined,{day:'numeric',month:'short'})}</span><button class="btn" data-a="wk" data-i="1">›</button><button class="btn pri" data-a="auto">Auto-plan week</button></div></div>
+<div class="wk">${days.map((d,i)=>{const l=ld(d),c=cap(d),T=S.tasks.filter(t=>t.date==d);return`<div class="gl day ${d==today()?'now':''}"><div class="row sp"><b>${DN[i]} ${D(d).getDate()}</b><button class="sm mu" data-a="new" data-d="${d}">+</button></div><div class="sm mu">${((S.rot||[])[i]||[]).filter(G).map(k=>`<span class="dot" style="background:${G(k).c};display:inline-block;margin-right:5px"></span>${esc(G(k).s||G(k).n)}`).join('<br>')||'Open day'}</div><div class="bar"><i style="width:${Math.min(100,pc(l/c))}%;${l>c?'background:var(--rs)':''}"></i></div><span class="sm mu">${fm(l)} of ${fm(c)} free</span>${T.map(t=>`<button class="chip ${t.done?'d':''}" style="--c:${G(t.g).c}" data-a="edit" data-i="${t.id}">${esc(t.t)}<br><span class="mu">${fm(t.min)}${t.ess?'':' · optional'}</span></button>`).join('')}</div>`}).join('')}</div>
+<div class="gl pad" style="margin-top:14px"><h3>Backlog <span class="mu sm">unscheduled</span></h3>${back.map(t=>`<button class="ck" data-a="edit" data-i="${t.id}"><span class="dot" style="background:${G(t.g).c};margin-top:7px"></span><span>${esc(t.t)} <i class="sm mu">${fm(t.min)}</i></span></button>`).join('')||'<p class="mu sm">Everything has a day.</p>'}</div>
+<div class="gl pad" style="margin-top:14px"><h3>Weekly rhythm</h3><p class="sm mu" style="margin:6px 0 10px">Choose which goals own each day. Auto-plan only places a goal's tasks on its days. Rest, gaming and sleep are never scheduled over.</p>${DN.map((d,i)=>`<div class="row" style="margin-bottom:8px"><b style="width:38px">${d}</b>${S.goals.map(g=>`<button class="btn sm ${((S.rot||[])[i]||[]).includes(g.id)?'on':''}" data-a="rot" data-i="${i}" data-j="${g.id}">${esc(g.s||g.n)}</button>`).join('')}</div>`).join('')}<button class="btn sm" data-a="redo">Redo setup</button></div>
+<div class="gl pad" style="margin-top:14px"><h3>Your real free time</h3><p class="sm mu" style="margin-bottom:10px">Minutes per day after work, church, rest and play. The planner never schedules past this.</p><div class="row">${DN.map((d,i)=>`<label style="width:78px">${d}<input type="number" min="0" step="15" data-c="free" data-i="${i}" value="${S.free[i]}"></label>`).join('')}<label style="width:130px">Your name<input data-c="name" value="${esc(S.name)}"></label></div></div>`}
+function tasks(){const td=today(),f={all:()=>1,today:t=>t.date==td,up:t=>!t.done&&t.date>td,done:t=>t.done}[ui.tf];const L=S.tasks.filter(f).sort((a,b)=>(a.date||'z')<(b.date||'z')?-1:1);
+return`<div class="top"><h1>Tasks</h1><button class="btn pri" data-a="new">Add task</button></div><div class="tabs" style="margin-bottom:14px">${[['today','Today'],['up','Upcoming'],['all','All'],['done','Completed']].map(x=>`<button class="btn ${ui.tf==x[0]?'on':''}" data-a="tf" data-i="${x[0]}">${x[1]}</button>`).join('')}</div><div class="gl pad">${L.map(t=>`<div class="row sp"><button class="ck ${t.done?'d':''}" data-a="tog" data-i="${t.id}"><span class="b">${t.done?'✓':''}</span><span>${esc(t.t)}<br><i class="sm mu">${esc(G(t.g).n)} · ${fm(t.min)} · ${t.date?D(t.date).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'}):'unscheduled'}</i></span></button><button class="btn sm" data-a="edit" data-i="${t.id}">Edit</button></div>`).join('')||'<p class="mu">Nothing here.</p>'}</div>`}
+function progress(){const p=all(),r=2*Math.PI*52,dn=S.tasks.filter(t=>t.done),mins=dn.reduce((s,t)=>s+t.min,0),ms=S.goals.flatMap(g=>g.ms.filter(m=>m.done).map(m=>({...m,g}))).sort((a,b)=>(b.at||'')<(a.at||'')?-1:1);
+return`<div class="top"><div><h1>Progress</h1><span class="mu">Only real work counts: milestones, tasks and hours.</span></div></div><div class="cols"><div class="stack"><div class="gl pad"><h3 style="margin-bottom:12px">Goal progress</h3>${S.goals.map(g=>{const d=g.ms.filter(m=>m.done).length;return`<div style="margin-bottom:16px"><div class="row sp"><span><span class="dot" style="background:${g.c};display:inline-block"></span> ${esc(g.n)}</span><b>${pc(gp(g))}%</b></div><div class="bar" style="margin:6px 0"><i style="width:${pc(gp(g))}%;background:${g.c}"></i></div><span class="sm mu">Started ${D(g.made).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})} at ${g.start}/${g.ms.length} milestones. Now ${d}/${g.ms.length}. Left: ${g.ms.length-d}.</span></div>`}).join('')}</div>
+<div class="gl pad"><h3 style="margin-bottom:8px">Evidence of growth</h3>${ms.map(m=>`<p class="sm">✓ <b>${esc(m.t)}</b> <span class="mu">· ${esc(m.g.n)}${m.at?' · '+D(m.at).toLocaleDateString(undefined,{day:'numeric',month:'short'}):''}</span></p>`).join('')||'<p class="mu sm">Your first milestone will appear here.</p>'}<h3 style="margin:14px 0 6px">Recently finished</h3>${dn.sort((a,b)=>(b.at||'')<(a.at||'')?-1:1).slice(0,8).map(t=>`<p class="sm">• ${esc(t.t)} <span class="mu">· ${esc(G(t.g).n)}</span></p>`).join('')||'<p class="mu sm">Nothing finished yet.</p>'}</div></div>
+<div class="stack"><div class="gl pad" style="text-align:center"><svg viewBox="0 0 120 120" width="150"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--ln)" stroke-width="10"/><circle cx="60" cy="60" r="52" fill="none" stroke="var(--ac)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${r*p} ${r}" transform="rotate(-90 60 60)"/><text x="60" y="66" text-anchor="middle" fill="var(--tx)" font-size="24" font-family="Fraunces,serif">${pc(p)}%</text></svg><p class="sm mu">across all goals</p></div><div class="st gl pad" style="display:grid"><div><b>${dn.length}</b><span class="sm mu">Tasks done</span></div><div><b>${ms.length}</b><span class="sm mu">Milestones</span></div><div><b>${(mins/60).toFixed(1)}</b><span class="sm mu">Hours of work</span></div><div><b>${new Set(dn.map(t=>t.at)).size}</b><span class="sm mu">Days with progress</span></div></div></div></div>`}
+function journal(){return`<div class="top"><div><h1>Journal</h1><span class="mu">Notice growth you might overlook.</span></div></div><div class="gl pad"><textarea id="jt" rows="3" placeholder="What did I move forward today?"></textarea><button class="btn pri" style="margin-top:10px" data-a="jadd">Save entry</button></div><div class="stack" style="margin-top:14px">${S.journal.map(j=>`<div class="gl pad"><span class="sm mu">${D(j.d).toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})}</span><p>${esc(j.x)}</p></div>`).join('')}</div>`}
+function render(){if(!S.ob){$('#nav').innerHTML='';$('#main').innerHTML='';ob();return}const N=[['home','Home'],['goals','Goals'],['plan','Planner'],['tasks','Tasks'],['prog','Progress'],['jour','Journal']];
+$('#nav').innerHTML=`<div class="logo"><b></b>DayFrame</div>`+N.map(n=>`<button class="nv ${view==n[0]?'on':''}" data-a="nav" data-i="${n[0]}">${ic(n[0]=='plan'?'plan':n[0]=='goals'?'goals':n[0])}${n[1]}</button>`).join('')+`<div class="foot">Small steps, big dreams.<br><br><button data-a="bk">Copy backup</button><button data-a="rs">Restore</button></div>`;
+$('#main').innerHTML={home,goals,plan:planner,tasks,prog:progress,jour:journal}[view]();if(ui.rescued){$('#modal').innerHTML=`<div class="ov" data-a="close"><div class="gl box"><h3>Day rebalanced</h3><p style="margin:10px 0 16px">${esc(ui.rescued)}</p><button class="btn pri" data-a="close">Got it</button></div></div>`;ui.rescued=null}save()}
+const TPL={dev:['Improve my coding skills','#4cc9f0',['Master HTML','Master CSS','Learn JavaScript','Build complete projects','Publish a portfolio'],'Coding'],f11:['Build FORM11 Tech Studios','#f6b66a',['Improve portfolio projects','Set up outreach','Land the first client','Deliver the first paid project'],'FORM11'],jamb:['Pass JAMB','#ff8fa3',['Mathematics','Physics','Chemistry','Use of English','Past questions','Mock exams'],'JAMB'],ytc:['Coding YouTube channel','#6ea8ff',['Plan the channel','Record the first tutorial','Publish the first video','Publish four videos'],'Coding YT'],ytb:['Boxing YouTube channel','#ff9f6e',['Research the niche','Script the first video','Edit and publish the first video','Publish four videos'],'Boxing YT'],gtr:['Guitar for church','#b794f6',['Core chords','Church songs','Lead guitar basics','Play at church'],'Guitar'],bl:['Music on BandLab','#7be0c3',['Learn the BandLab basics','Finish a first beat','Finish a first track','Release something'],'BandLab']};
+const DR=[['dev','f11'],['ytc','jamb'],['f11','jamb'],['bl','dev'],['ytb','jamb'],['ytb','bl'],['gtr']];
+function ob(){const o=ui.ob=ui.ob||{s:0,pick:Object.keys(TPL),name:'',wd:180,we:240,x:''};
+const st=[`<h1>Welcome to DayFrame</h1><p class="mu" style="margin:8px 0 16px">A calm place to turn your ambitions into one clear day at a time. First, what should I call you?</p><label>Your name<input id="on" value="${esc(o.name)}" placeholder="Your name" autocomplete="given-name"></label>`,
+`<h2>How much real time do you have?</h2><p class="mu sm" style="margin:8px 0 14px">Count only free time after work, church, chores, rest and play. DayFrame never plans past it.</p><div class="r2"><label>Weekday minutes<input id="ow" type="number" min="0" step="15" value="${o.wd}"></label><label>Saturday minutes<input id="oe" type="number" min="0" step="15" value="${o.we}"></label></div><p class="mu sm">Sunday is set to half of Saturday. You can change every day later in the Planner.</p>`,
+`<h2>What are you working toward?</h2><p class="mu sm" style="margin:8px 0 0">Pick the goals that matter now. Each starts with milestones you can edit and gets its own days of the week.</p><div class="pick">${Object.keys(TPL).map(k=>`<button class="btn ${o.pick.includes(k)?'on':''}" data-a="obt" data-i="${k}">${TPL[k][0]}</button>`).join('')}</div><label>Your own goals, separated by commas<input id="ox" value="${esc(o.x)}" placeholder="e.g. Release my first app, Save for a laptop"></label>`];
+$('#modal').innerHTML=`<div class="ov"><div class="gl box" style="width:min(520px,100%)"><div class="dots">${[0,1,2].map(i=>`<i class="${i<=o.s?'on':''}"></i>`).join('')}</div>${st[o.s]}<div class="row sp" style="margin-top:14px">${o.s?'<button class="btn" data-a="obb">Back</button>':'<span></span>'}<button class="btn pri" data-a="obn">${o.s==2?'Build my plan':'Continue'}</button></div></div></div>`}
+function obAct(x,i){const o=ui.ob,v=id=>$(id)?$(id).value:null;
+if(o.s==0&&v('#on')!=null)o.name=v('#on').trim();if(o.s==1&&$('#ow')){o.wd=+v('#ow')||0;o.we=+v('#oe')||0}if(o.s==2&&$('#ox'))o.x=v('#ox');
+if(x=='obt')o.pick=o.pick.includes(i)?o.pick.filter(k=>k!=i):[...o.pick,i];
+else if(x=='obb')o.s--;
+else if(x=='obn'){if(o.s==0&&!o.name)return toast('Add your name to continue');if(o.s<2)o.s++;else{const xs=o.x.split(',').map(a=>a.trim()).filter(Boolean);if(!o.pick.length&&!xs.length)return toast('Pick at least one goal');obDone(xs);return}}
+ob()}
+function obDone(xs){const o=ui.ob,cs=['#7be0c3','#4cc9f0','#f6b66a','#ff8fa3'],L=[...o.pick.map(k=>[k,...TPL[k]]),...xs.map((n,i)=>['c'+i+uid(),n,cs[i%4],['Define the first milestone','Make real progress','Finish it'],n])];
+S={name:o.name,free:[o.wd,o.wd,o.wd,o.wd,o.wd,o.we,Math.round(o.we/2)],goals:[],tasks:[],journal:[],ob:1,rot:DR.map(a=>a.filter(k=>o.pick.includes(k)))};
+L.forEach(([id,n,c,ms,sh])=>{S.goals.push({id,n,s:sh||n,c,made:today(),start:0,next:'',block:'',ms:ms.map((t,i)=>({id:id+i,t,done:false}))});S.tasks.push({id:uid(),t:'Start: '+ms[0],g:id,m:id+'0',min:30,ess:true,date:'',done:false})});
+ui.ob=null;ui.wo=0;view='home';$('#modal').innerHTML='';autoPlan();render()}
+function tm(t){$('#modal').innerHTML=`<div class="ov" data-a="close"><div class="gl box"><h3 style="margin-bottom:12px">${t.id?'Edit task':'New task'}</h3><label>Task<input id="mt" value="${esc(t.t||'')}"></label><label>Goal<select id="mg" onchange="mo()">${S.goals.map(g=>`<option value="${g.id}" ${g.id==(t.g||S.goals[0].id)?'selected':''}>${esc(g.n)}</option>`).join('')}</select></label><label>Milestone<select id="mm"></select></label><div class="r2"><label>Minutes<input id="mn" type="number" min="5" step="5" value="${t.min||30}"></label><label>Date<input id="md" type="date" value="${t.date||''}"></label></div><label style="flex-direction:row;align-items:center"><input id="me" type="checkbox" style="width:auto" ${t.ess!==false?'checked':''}> Essential for the day</label><div class="row" style="margin-top:8px"><button class="btn pri" data-a="savetask">Save</button>${t.id?'<button class="btn" data-a="deltask">Delete</button>':''}<button class="btn" data-a="close">Cancel</button></div></div></div>`;ui.m=t;mo(t.m)}
+function mo(sel){const g=G($('#mg').value);$('#mm').innerHTML='<option value="">No milestone</option>'+g.ms.map(m=>`<option value="${m.id}" ${m.id==sel?'selected':''}>${esc(m.t)}</option>`).join('')}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a)return;const x=a.dataset.a,i=a.dataset.i;if(x=='close'){if(a.classList.contains('ov')&&e.target!==a)return;$('#modal').innerHTML='';return}
+if(x=='nav'){view=i;window.scrollTo(0,0)}else if(x=='tog')tog(i);else if(x=='open')ui.open[i]=!ui.open[i];
+else if(x=='ms'){const m=M(G(i),a.dataset.j);m.done=!m.done;m.auto=false;m.at=m.done?today():null}
+else if(x=='addms'){const v=$('#nm'+i).value.trim();if(v)G(i).ms.push({id:uid(),t:v,done:false})}
+else if(x=='tf')ui.tf=i;else if(x=='wk')ui.wo+=+i;else if(x=='auto')autoPlan();
+else if(x=='new'){tm({g:a.dataset.g,m:a.dataset.m,date:a.dataset.d||'',ess:true});return}
+else if(x=='edit'){tm(S.tasks.find(t=>t.id==i));return}
+else if(x=='savetask'){const o=ui.m,v={t:$('#mt').value.trim()||'Untitled',g:$('#mg').value,m:$('#mm').value,min:+$('#mn').value||30,date:$('#md').value,ess:$('#me').checked};if(o.id)Object.assign(S.tasks.find(t=>t.id==o.id),v);else S.tasks.push({id:uid(),done:false,...v});$('#modal').innerHTML=''}
+else if(x=='deltask'){S.tasks=S.tasks.filter(t=>t.id!=ui.m.id);$('#modal').innerHTML=''}
+else if(x=='obt'||x=='obb'||x=='obn'){obAct(x,i);return}
+else if(x=='rot'){const r=S.rot[+i],j=a.dataset.j;S.rot[+i]=r.includes(j)?r.filter(k=>k!=j):[...r,j]}
+else if(x=='redo'){if(!confirm('This clears your current plan and restarts setup. Continue?'))return;S.ob=0;ui.ob=null}
+else if(x=='newgoal'){$('#modal').innerHTML=`<div class="ov" data-a="close"><div class="gl box"><h3 style="margin-bottom:12px">New goal</h3><label>Goal<input id="gn" placeholder="e.g. Release my first app"></label><label>Milestones, one per line<textarea id="gm" rows="4"></textarea></label><div class="row"><button class="btn pri" data-a="savegoal">Create</button><button class="btn" data-a="close">Cancel</button></div></div></div>`;return}
+else if(x=='savegoal'){const n=$('#gn').value.trim();if(n){const cs=['#4cc9f0','#f6b66a','#ff8fa3','#b794f6','#6ea8ff','#7be0c3'],id='g'+uid();S.goals.push({id,n,c:cs[S.goals.length%6],made:today(),start:0,next:'',block:'',ms:$('#gm').value.split('\n').filter(s=>s.trim()).map(s=>({id:uid(),t:s.trim(),done:false}))});ui.open[id]=true;view='goals'}$('#modal').innerHTML=''}
+else if(x=='rescue'){$('#modal').innerHTML=`<div class="ov" data-a="close"><div class="gl box"><h3>How is your energy right now?</h3><p class="mu sm" style="margin:6px 0 14px">DayFrame will keep what fits, split big tasks, and move the rest to days with room.</p><div class="row"><button class="btn" data-a="resc" data-i="1">Fine, plans changed</button><button class="btn" data-a="resc" data-i=".6">Tired</button><button class="btn" data-a="resc" data-i=".3">Slammed</button></div></div></div>`;return}
+else if(x=='resc'){rescue(+i);$('#modal').innerHTML=''}
+else if(x=='jadd'){const v=$('#jt').value.trim();if(v)S.journal.unshift({d:today(),x:v})}
+else if(x=='bk'){const s=JSON.stringify(S);(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(()=>toast('Backup copied. Paste it somewhere safe.'),()=>prompt('Copy your backup:',s));return}
+else if(x=='rs'){const s=prompt('Paste a backup to restore:');if(s)try{S=JSON.parse(s);toast('Restored')}catch(e){toast('That backup could not be read')}}
+render()});
+document.addEventListener('change',e=>{const c=e.target.dataset.c;if(!c)return;const i=e.target.dataset.i,v=e.target.value;if(c=='free')S.free[i]=+v||0;else if(c=='name')S.name=v||'friend';else G(i)[c]=v;save();if(c!='next'&&c!='block')render()});
+load();render();
+
+let dip;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;document.body.classList.add('can')});
+addEventListener('appinstalled',()=>document.body.classList.remove('can'));
+document.addEventListener('click',e=>{const b=e.target.closest('[data-pwa]');if(!b)return;if(b.dataset.pwa=='x')document.body.classList.remove('can');else if(dip){dip.prompt();dip=null;document.body.classList.remove('can')}});
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script><div id="ib" class="gl"><span>Install DayFrame on this device</span><button class="btn pri" data-pwa="i">Install</button><button class="btn" data-pwa="x" aria-label="Dismiss">✕</button></div></body></html>
